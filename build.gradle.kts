@@ -19,6 +19,7 @@ dependencies {
     annotationProcessor ("org.projectlombok:lombok:1.18.20")
     compileOnly("jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1")
     compileOnly("jakarta.platform:jakarta.jakartaee-web-api:10.0.0")
+    implementation("org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2")
 }
 
 tasks.getByName<Test>("test") {

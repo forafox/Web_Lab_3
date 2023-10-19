@@ -23,5 +23,5 @@ window.addEventListener("DOMContentLoaded", () => {
         dayFromDoc.innerHTML = dayOfWeek[date.getDay()] + " " + date.getDay() + " " + months[date.getMonth()] + " " + date.getFullYear();
     }
     setTime()
-    setInterval(setTime, 7000);
+    setInterval(setTime, 10000);
 })

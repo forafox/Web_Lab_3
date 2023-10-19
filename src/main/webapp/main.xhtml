@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
->
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/jsf/core ">
 <h:head>
     <meta charset="utf-8"/>
     <meta name="author" content="Karabanov Andrey"/>
@@ -14,11 +16,25 @@
 
 </h:head>
 <h:body>
-        <nav>
-            <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
-            <div class="nav-items">
-                <h:link href="/">Home</h:link> <a href="/">About me</a> <a href="/">Code</a>
-            </div>
-        </nav>
+    <nav>
+        <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
+        <div class="nav-items">
+            <h:link href="/">Home</h:link>
+            <a href="https://t.me/forafox">About me</a> <a href="https://github.com/forafox/Web_Lab_3">Code</a>
+        </div>
+    </nav>
+    <div class="main_body">
+        <div id="Y">
+            Введите Y [-3; 5]:
+            <br/>
+            <h:inputText id="Y-value" styleClass="y-value" value="#{dotBean.dot.y}" required="true"
+                         requiredMessage="Введите Y" validatorMessage="Не входит в [-3..5]"
+                         converterMessage="Введите число">
+                <f:validateDoubleRange minimum="-3" maximum="5"/>
+                <f:ajax render="Y-value-message"/>
+            </h:inputText>
+            <h:message id="Y-value-message" for="Y-value" styleClass="error"/>
+        </div>
+    </div>
 </h:body>
 </html>
