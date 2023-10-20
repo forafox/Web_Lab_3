@@ -24,6 +24,7 @@
         </div>
     </nav>
     <div class="main_body">
+        <h:form if="form">
         <div id="Y">
             Введите Y [-3; 5]:
             <br/>
@@ -35,6 +36,111 @@
             </h:inputText>
             <h:message id="Y-value-message" for="Y-value" styleClass="error"/>
         </div>
+            <div id="X">
+                Выберите X [-3; 5]:
+                <br/>
+                <h:panelGroup>
+                    <h:commandButton value="-3" action="#{dotBean.dot.setX(-3)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="-2" action="#{dotBean.dot.setX(-2)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="-1" action="#{dotBean.dot.setX(-1)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="1" action="#{dotBean.dot.setX(1)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="2" action="#{dotBean.dot.setX(2)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="3" action="#{dotBean.dot.setX(3)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="4" action="#{dotBean.dot.setX(4)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                    <h:commandButton value="5" action="#{dotBean.dot.setX(5)}" styleClass="x-button">
+                        <f:ajax/>
+                    </h:commandButton>
+                </h:panelGroup>
+                <h:message id="X-value-message" for="X" styleClass="error"/>
+            </div>
+            <div id="R">
+                Выберите R (1, 1.5, 2, 2.5, 3):
+                <br/>
+                <h:panelGrid columns="1">
+                    <h:panelGroup>
+                        <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link">
+                            <f:ajax/>
+                        </h:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link">
+                            <f:ajax/>
+                        </h:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link">
+                            <f:ajax/>
+                        </h:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:commandLink value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link">
+                            <f:ajax/>
+                        </h:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link">
+                            <f:ajax/>
+                        </h:commandLink>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:message id="R-value-message" for="R" styleClass="error"/>
+            </div>
+        </h:form>
+        <div>
+        </div>
     </div>
+    <div id="button-container">
+        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()}">
+            <f:ajax/>
+        </h:commandButton>
+        <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить" action="#{dotBean.clear()}">
+            <f:ajax/>
+        </h:commandButton>
+    </div>
+    <h:panelGroup layout="block" id="table-container">
+        <h:dataTable styleClass="table" id="results" var="dot" value="#{dotBean.dotsList}">
+            <h:column styleClass="table-value">
+                <f:facet name="header">X</f:facet>
+                <h:outputText id="x" value="#{dot.x}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Y</f:facet>
+                <h:outputText id="y" value="#{dot.y}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">R</f:facet>
+                <h:outputText id="r" value="#{dot.r}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Текущее время</f:facet>
+                <h:outputText id="time" value="#{dot.time}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Время работы (мкс)</f:facet>
+                <h:outputText id="script-time" value="#{dot.scriptTime}"/>
+            </h:column>
+            <h:column styleClass="table-value">
+                <f:facet name="header">Результат</f:facet>
+                <h:outputText id="status" value="#{dot.status}"/>
+            </h:column>
+        </h:dataTable>
+    </h:panelGroup>
 </h:body>
 </html>

@@ -22,6 +22,7 @@ public class DotDao implements Serializable{
     }
 
     public void addDotToDB(Dot dot) {
+        System.out.print("Being transaction with "+dot);
         entityManager.getTransaction().begin();
         try {
             entityManager.persist(dot);

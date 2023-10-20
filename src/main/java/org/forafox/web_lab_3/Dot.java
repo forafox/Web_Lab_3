@@ -11,6 +11,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "dots")
 @ApplicationScoped
@@ -19,7 +21,7 @@ public class Dot implements Serializable {
     @GeneratedValue
     private Long id;
     @Column
-    private float x = -2.0f;
+    private float x = (-2.0f;
     @Column
     private float y = 0.0f;
     @Column
@@ -31,60 +33,23 @@ public class Dot implements Serializable {
     @Column
     private long scriptTime;
 
-    public float getX() {
-        return x;
-    }
-
     public void setX(float x) {
+        System.out.println(x);
         this.x = x;
     }
 
-    public float getY() {
-        return y;
-    }
-
     public void setY(float y) {
+        System.out.println("Y value = "+y);
         this.y = y;
     }
 
-    public float getR() {
-        return r;
-    }
-
     public void setR(float radius) {
+        System.out.println(radius);
         this.r = radius;
     }
 
     public String getStatus() {
-        if (status) return "попадание!";
-        else return "промах!";
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public long getScriptTime() {
-        return scriptTime;
-    }
-
-    public void setScriptTime(long scriptTime) {
-        this.scriptTime = scriptTime;
-    }
-
-    public void updateX(ValueChangeEvent e){
-        String id = ((HtmlSelectBooleanCheckbox) e.getSource()).getId();
-        boolean isChecked = (boolean) e.getNewValue();
-        if (isChecked){
-            setX(Float.parseFloat(id.substring(5,id.length()).replace("x", ".")));
-        }
-    }
+        if (status) return "Hit!";
+        else return "Miss!";
+    })
 }

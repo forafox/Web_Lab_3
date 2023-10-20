@@ -7,15 +7,8 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <non-jta-data-source>java:/PostgresDS</non-jta-data-source>
         <class>org.forafox.web_lab_3.Dot</class>
-<!--        <properties>-->
-<!--            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/mydatabase"/>-->
-<!--            <property name="javax.persistence.jdbc.user" value="myuser"/>-->
-<!--            <property name="javax.persistence.jdbc.password" value="secret"/>-->
-<!--            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
-<!--            <property name="eclipselink.ddl-generation" value="create-tables"/>-->
-<!--        </properties>-->
         <properties>
-<!--            <property name="eclipselink.target-database" value="PostgreSQL"/>-->
+            <property name="eclipselink.target-database" value="PostgreSQL"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
     </persistence-unit>
