@@ -63,7 +63,7 @@ link:hover{
     border-radius: 50px;
 }
 #data-container{
-    justify-content: space-between;
+    justify-content: space-around;
     display: flex;
 }
 
@@ -191,7 +191,9 @@ link:hover{
     font-weight: bold;
     font-style: italic;
 }
-
+.active{
+    background-color: red;
+}
 /*#C6DF90*/
 /*#F2DDC6*/
 /*#FFE4C4*/

@@ -21,7 +21,7 @@ public class Dot implements Serializable {
     @GeneratedValue
     private Long id;
     @Column
-    private float x = -2.0f;
+    private float x = 0.0f;
     @Column
     private float y = 0.0f;
     @Column
