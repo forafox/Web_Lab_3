@@ -19,11 +19,11 @@
     <nav>
         <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
         <div class="nav-items">
-            <h:link href="/">Home</h:link>
+            <h:link outcome="toIndex">Home</h:link>
             <a href="https://t.me/forafox">About me</a> <a href="https://github.com/forafox/Web_Lab_3">Code</a>
         </div>
     </nav>
-    <div class="main_body">
+    <div id="data-container">
         <h:form if="form">
         <div id="Y">
             Введите Y [-3; 5]:
@@ -39,7 +39,8 @@
             <div id="X">
                 Выберите X [-3; 5]:
                 <br/>
-                <h:panelGroup>
+
+                <div id="x-button-div">
                     <h:commandButton value="-3" action="#{dotBean.dot.setX(-3)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
@@ -67,13 +68,13 @@
                     <h:commandButton value="5" action="#{dotBean.dot.setX(5)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
-                </h:panelGroup>
-                <h:message id="X-value-message" for="X" styleClass="error"/>
+                </div>
             </div>
+
             <div id="R">
                 Выберите R (1, 1.5, 2, 2.5, 3):
                 <br/>
-                <h:panelGrid columns="1">
+                <div id="r-link-div">
                     <h:panelGroup>
                         <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link">
                             <f:ajax/>
@@ -99,19 +100,23 @@
                             <f:ajax/>
                         </h:commandLink>
                     </h:panelGroup>
-                </h:panelGrid>
-                <h:message id="R-value-message" for="R" styleClass="error"/>
+                </div>
             </div>
         </h:form>
         <div>
         </div>
+        <div class="canvas-form">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
+
+
     <div id="button-container">
         <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()}">
-            <f:ajax/>
+            <f:ajax render="results"/>
         </h:commandButton>
         <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить" action="#{dotBean.clear()}">
-            <f:ajax/>
+            <f:ajax render="results"/>
         </h:commandButton>
     </div>
     <h:panelGroup layout="block" id="table-container">

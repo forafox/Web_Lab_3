@@ -21,7 +21,7 @@ public class Dot implements Serializable {
     @GeneratedValue
     private Long id;
     @Column
-    private float x = (-2.0f;
+    private float x = -2.0f;
     @Column
     private float y = 0.0f;
     @Column
@@ -39,7 +39,7 @@ public class Dot implements Serializable {
     }
 
     public void setY(float y) {
-        System.out.println("Y value = "+y);
+        System.out.println("Y value = " + y);
         this.y = y;
     }
 
@@ -51,5 +51,5 @@ public class Dot implements Serializable {
     public String getStatus() {
         if (status) return "Hit!";
         else return "Miss!";
-    })
+    }
 }

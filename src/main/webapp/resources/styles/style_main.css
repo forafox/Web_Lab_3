@@ -1,5 +1,14 @@
+:root{
+    --main-radius: 10px;
+    --dark-blue: rgb(63, 61, 61);
+    --light-background-color-table: rgb(100, 100, 100);
+    --background-color: #FFDEAD;
+    --light-blue: rgb(100, 100, 100);
+}
+
+
 * {
-    background: #fdcc04;
+    background: var(--background-color);
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -9,7 +18,7 @@
 
 nav {
     height: 80px;
-    background: #fdcc04;
+    background: var(--background-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,13 +42,13 @@ nav a:hover {
 }
 
 .hero {
-    background: #fdcc04;
+    background: var(--background-color);
 }
 link{
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
-    color: #fdcc04;
+    color: var(--background-color);
     background: #000;
     cursor: pointer;
     border-radius: 50px;
@@ -48,8 +57,143 @@ link:hover{
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
-    color: #fdcc04;
+    color: var(--background-color);
     background: #000;
     cursor: pointer;
     border-radius: 50px;
 }
+#data-container{
+    justify-content: space-between;
+    display: flex;
+}
+
+#data-container,#table-container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#table-container{
+    margin-top: 2%;
+    padding: 3px;
+    grid-area: table-container;
+    background-color: var(--light-background-color-table);
+    border-radius: var(--main-radius);
+}
+
+#results {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+    text-align: center;
+}
+#results th {
+    font-weight: 400;
+}
+#results td {
+    font-weight: 300;
+    border: 1px var(--dark-blue) solid;
+}
+
+#button-container{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button {
+    background-color: var(--dark-blue);
+    color: var(--background-color);
+    border: var(--dark-blue);
+    border-radius: var(--main-radius);
+    font-family: 'Unbounded', cursive;
+    font-size: medium;
+    font-weight: 300;
+    text-align: center;
+    padding: 7px 12px 7px 12px;
+    margin-right: 2%;
+    transition:  color 500ms,background-color 500ms;
+}
+
+.button:hover{
+    background-color: var(--light-blue);
+}
+
+
+#Y{
+    padding: 15px 15px 15px 15px;
+    margin-bottom: 5%;
+}
+
+.y-value{
+    padding: 2px;
+    margin-top: 10px;
+    margin-right: 2px;
+    outline: none;
+    border-color: var(--dark-blue);
+    border-radius: var(--main-radius);
+    box-shadow: 0 0 0 0.05rem var(--dark-blue);
+}
+#X{
+    padding: 15px 15px 15px 15px;
+    margin-bottom: 5%;
+}
+#x-button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.x-button{
+    margin: 3px;
+    background-color: var(--dark-blue);
+    color: var(--background-color);
+    border: var(--dark-blue);
+    border-radius: var(--main-radius);
+    font-family: 'Unbounded', cursive;
+    text-align: center;
+    padding: 2px 10px;
+    font-size: 80%;
+}
+.x-button:hover {
+    background-color: var(--light-blue);
+}
+
+.x-button:active{
+    background-color: var(--light-blue);
+}
+
+#R{
+    padding: 15px 15px 15px 15px;
+    margin-bottom: 5%;
+}
+.r-link {
+    text-decoration: none;
+    margin: 3px;
+    background-color: var(--dark-blue);
+    color: var(--background-color);
+    border: var(--dark-blue);
+    border-radius: var(--main-radius);
+    font-family: 'Unbounded', cursive;
+    text-align: center;
+    padding: 2px 10px;
+    font-size: 80%;
+}
+#r-link-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.r-link:hover{
+    background-color: var(--light-blue);
+}
+
+#R,#X,#Y{
+    font-weight: bold;
+    font-style: italic;
+}
+
+/*#C6DF90*/
+/*#F2DDC6*/
+/*#FFE4C4*/
+/*#FFE4C4*/
+/*#FFDEAD*/

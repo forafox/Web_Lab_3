@@ -1,5 +1,8 @@
+:root{
+    --background-color: #FFDEAD;
+}
 * {
-    background: #fdcc04;
+    background: var(--background-color);
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -9,7 +12,7 @@
 
 nav {
     height: 80px;
-    background: #fdcc04;
+    background: var(--background-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,7 +26,6 @@ nav {
     font-style: italic;
     padding: 0 2rem;
 }
-
 nav a {
     text-decoration: none;
     color: #000;
@@ -35,7 +37,7 @@ nav a:hover {
 }
 
 .hero {
-    background: #fdcc04;
+    background: var(--background-color);
 }
 
 .hero-container {
@@ -69,17 +71,18 @@ nav a:hover {
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
-    color: #fdcc04;
+    color: var(--background-color);
     background: #000;
     cursor: pointer;
     border-radius: 50px;
+    transition:  color 500ms,background 500ms;
 }
 
 link{
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
-    color: #fdcc04;
+    color: var(--background-color);
     background: #000;
     cursor: pointer;
     border-radius: 50px;
@@ -88,7 +91,7 @@ link:hover{
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
-    color: #fdcc04;
+    color: var(--background-color);
     background: #000;
     cursor: pointer;
     border-radius: 50px;
@@ -134,4 +137,3 @@ link:hover{
     font-weight: normal;
     font-size: 18px;
 }
-
