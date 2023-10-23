@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -51,5 +52,18 @@ public class Dot implements Serializable {
     public String getStatus() {
         if (status) return "Hit!";
         else return "Miss!";
+    }
+
+    public String toJSON() {
+        return String.format(Locale.US, """
+                {
+                "x": %.3f,
+                "y": %.3f,
+                "r": %.3f,
+                "status": "%s",
+                "time": "%s",
+                "scriptTime": %d
+                }
+                """, x, y, r, getStatus(), time, scriptTime);
     }
 }

@@ -1,32 +1,61 @@
 let canvas
-window.addEventListener("DOMContentLoaded", () => {
-    canvas = document.getElementById("canvas");
+// window.addEventListener("DOMContentLoaded", () => {
+//     canvas = document.getElementById("canvas");
+//
+//     canvas.addEventListener("click",(e) =>{
+//         let finalX=0;
+//         let finalY=0;
+//         let elementRelativeX = e.offsetX;
+//         let elementRelativeY = e.offsetY;
+//         let canvasRelativeX = elementRelativeX * canvas.width/canvas.clientWidth;
+//         let canvasRelativeY = elementRelativeY *canvas.height/canvas.clientHeight;
+//         if(canvasRelativeY<=150){
+//             finalY=Math.round(defaultR-(canvasRelativeY-25)/25);
+//         }else{
+//             finalY=(-(Math.round((canvasRelativeY-150)/25)))
+//         }
+//         if(canvasRelativeX<=150){
+//             finalX=(-(Math.round(defaultR-(canvasRelativeX-40)/22)))
+//         }else{
+//             finalX=Math.round((canvasRelativeX-150)/22);
+//         }
+//         console.log(finalX,finalY)
+//         if(getDataFromFormAndClick(finalX,finalY)){
+//             console.log("Точка успешно поставлена!")
+//         }else{
+//             console.log("Точка не поставлена");
+//         }
+//
+//     })
+// })
 
-    canvas.addEventListener("click",(e) =>{
-        let finalX=0;
-        let finalY=0;
-        let elementRelativeX = e.offsetX;
-        let elementRelativeY = e.offsetY;
-        let canvasRelativeX = elementRelativeX * canvas.width/canvas.clientWidth;
-        let canvasRelativeY = elementRelativeY *canvas.height/canvas.clientHeight;
-        if(canvasRelativeY<=150){
-            finalY=Math.round(defaultR-(canvasRelativeY-25)/25);
-        }else{
-            finalY=(-(Math.round((canvasRelativeY-150)/25)))
-        }
-        if(canvasRelativeX<=150){
-            finalX=(-(Math.round(defaultR-(canvasRelativeX-40)/22)))
-        }else{
-            finalX=Math.round((canvasRelativeX-150)/22);
-        }
-        // if(getDataFromFormAndClick(finalX,finalY)){
-        //     console.log("Точка успешно поставлена!")
-        // }else{
-        //     console.log("Точка не поставлена");
-        // }
-
-    })
-})
+// function updateBeforeClick(elementRelativeX,elementRelativeY,r){
+//         let canvasRelativeX = elementRelativeX * canvas.width/canvas.clientWidth;
+//         let canvasRelativeY = elementRelativeY *canvas.height/canvas.clientHeight;
+//         if(canvasRelativeY<=150){
+//             finalY=Math.round(defaultR-(canvasRelativeY-25)/25);
+//         }else{
+//             finalY=(-(Math.round((canvasRelativeY-150)/25)))
+//         }
+//         if(canvasRelativeX<=150){
+//             finalX=(-(Math.round(defaultR-(canvasRelativeX-40)/22)))
+//         }else{
+//             finalX=Math.round((canvasRelativeX-150)/22);
+//         }
+//         console.log(finalX,finalY)
+//         if(updateNewPoint(finalX,finalY,r)){
+//             console.log("Точка успешно поставлена!")
+//         }else{
+//             console.log("Точка не поставлена");
+//         }
+// }
+//
+// function updateNewPoint(x,y,r){
+//     let size = 300;
+//
+//     let ctx = canvas.getContext("2d");
+//     drawPoint(ctx,size,x,y,)
+// }
 
 let defaultR=5;
 let currentList;
@@ -83,11 +112,11 @@ function drawText(ctx, size, r) {
 }
 
 function drawPoint(ctx, size, xVal, yVal, flag){
-    console.log("In drawPoint")
+    console.log("In drawPoint",flag)
     if (flag === 'Hit!') {
-        ctx.fillStyle = "Blue";
+        ctx.fillStyle = "green";
     }else if(flag==="timePoint"){
-        ctx.fillStyle="green";
+        ctx.fillStyle="Blue";
     }
     else {
         ctx.fillStyle = "red";
@@ -100,6 +129,7 @@ function drawPoint(ctx, size, xVal, yVal, flag){
     return true;
 }
 function updateList(list){
+    canvas = document.getElementById("canvas");
     currentList=list
     drawWithList(currentList);
 }

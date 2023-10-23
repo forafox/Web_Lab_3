@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -58,5 +59,12 @@ public class DotBean implements Serializable {
     public void clear() {
         dotDao.clearDotsInBD();
         dotsList = dotDao.getDotsFromDB();
+    }
+
+    public String dotsJson(){
+        return   dotsList.stream()
+                .map(Dot::toJSON)
+                .toList()
+                .toString();
     }
 }

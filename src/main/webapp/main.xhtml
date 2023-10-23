@@ -16,7 +16,7 @@
     <h:outputStylesheet library="styles" name="style_main.css"/>
 
 </h:head>
-<h:body onload="drawWithList(null)">
+<h:body>
     <nav>
         <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
         <div class="nav-items">
@@ -108,7 +108,6 @@
         </div>
         <div class="canvas-form">
             <canvas id="canvas"></canvas>
-
         </div>
     </div>
 
@@ -149,5 +148,29 @@
             </h:column>
         </h:dataTable>
     </h:panelGroup>
+
+<!--    <h:outputScript type="text/javascript">-->
+<!--        let pointsJson = '#{DotBean.dotsJson()}'-->
+<!--        console.log(pointsJson)-->
+<!--    </h:outputScript>-->
+
+    <h:outputScript type="text/javascript">
+        let pointsJson = `#{dotBean.dotsJson()}`
+        console.log(pointsJson)
+        let points = JSON.parse(pointsJson)
+        updateList(points)
+    </h:outputScript>
+
+<!--    <h:outputScript type="text/javascript">-->
+<!--        canvas = document.getElementById("canvas")-->
+<!--        canvas.addEventListener("click",(e) =>{-->
+<!--        let elementRelativeX = e.offsetX-->
+<!--        let elementRelativeY = e.offsetY-->
+<!--        let rValue=`#{dotBean.dot.r}`-->
+<!--        if(updateBeforeClick(elementRelativeX,elementRelativeY,rValue)){-->
+<!--            `#{dotBean.add()}`-->
+<!--        }-->
+<!--        })-->
+<!--    </h:outputScript>-->
 </h:body>
 </html>
