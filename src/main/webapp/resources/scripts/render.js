@@ -70,10 +70,11 @@ function draw(r, points) {
     drawGrid();
     drawAxes();
 
-    currentR = defaultR;
+    currentR = r;
     if (currentR === undefined) {
+        currentR=defaultR
         drawText(defaultR);
-        // drawPolygon(defaultR);
+        drawPolygon(defaultR);
     } else {
         drawText(currentR);
         drawPolygon(currentR);

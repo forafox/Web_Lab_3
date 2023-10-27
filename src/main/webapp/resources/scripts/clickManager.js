@@ -20,6 +20,16 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 })
 
+function rChange(newValue){
+    let rButtons = document.querySelectorAll('.r-link');
+    for (let i = 0; i < rButtons.length; i++) {
+        if (rButtons[i].value === newValue) {
+            rButtons[i].click()
+            break
+        }
+    }
+}
+
 function findButtonByValue(x){
     let xButtons = document.querySelectorAll('.x-button');xButtons.forEach(function(button) {
         for (let i = 0; i < xButtons.length; i++) {

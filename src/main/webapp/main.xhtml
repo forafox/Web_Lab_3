@@ -19,7 +19,7 @@
      <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
 
 </h:head>
-<h:body onload="updateList()">
+<h:body onload="firstUpdateList()">
     <nav>
         <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
         <div class="nav-items">
@@ -115,11 +115,11 @@
     </div>
     <div id="validation-info" class="validationInfo"></div>
     <div id="button-container">
-        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()} , #{dotBean.dotsJson()}"  >
-            <f:ajax render="results"/>
+        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()}">
+            <f:ajax render="results myForm"/>
         </h:commandButton>
         <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить" action="#{dotBean.clear()}">
-            <f:ajax render="results"/>
+            <f:ajax render="results myForm"/>
         </h:commandButton>
     </div>
     <h:panelGroup layout="block" id="table-container">
@@ -151,18 +151,6 @@
         </h:dataTable>
     </h:panelGroup>
 
-
-    <h:outputScript type="text/javascript">
-            function updateList() {
-                console.log("in update")
-                let pointsJson = `#{dotBean.dotsJson()}`
-                let points = JSON.parse(pointsJson)
-                let r = `#{dot.r}`
-                draw(r,points)
-<!--                checkButtonColor(#{dotBean.dot.x})-->
-            }
-    </h:outputScript>
-
     <h:form id="myForm">
         <h:inputHidden id="xValue" value="#{dotBean.dot.x}">
         </h:inputHidden>
@@ -175,25 +163,46 @@
     </h:form>
 
     <h:outputScript type="text/javascript">
-            function sendData(x,y,r) {
-                    console.log("in sendData")
-                    let xInput = document.getElementById('myForm:xValue');
-                    let yInput = document.getElementById('myForm:yValue');
-                    let button = document.getElementById('check');
+        function firstUpdateList() {
+            let pointsJson= document.getElementById('myForm:dots').value;
+            let rValue= document.getElementById('myForm:rValue').value;
+            let points = JSON.parse(pointsJson)
+            console.log(rValue,points)
+            draw(rValue,points)
+        }
+    </h:outputScript>
 
-                    xInput.value = x;
-                    yInput.value = y;
+    <h:outputScript type="text/javascript">
+            function sendData(x,y,r) {
+                    document.getElementById('myForm:xValue').value = x;
+                    document.getElementById('myForm:yValue').value = y;
+
                     faces.ajax.request('myForm', null, {
                     execute: 'myForm',
                     render: 'results',
                     onevent: function (data) {
                         if (data.status === 'success') {
-                            button.click();
-                            updateList();
+                            document.getElementById('check').click();
+                        setTimeout(function() {
+                            firstUpdateList();
+                        }, 200);
+
                         }
                     }
                 });
             }
+            document.getElementById("clear").addEventListener("click",function () {
+                setTimeout(function() {
+                    console.log("clear")
+                    firstUpdateList();
+                }, 200);
+        });
+        document.getElementById("check").addEventListener("click",function () {
+            setTimeout(function() {
+                console.log("check")
+                firstUpdateList();
+                }, 200);
+        });
     </h:outputScript>
 </h:body>
 </html>
