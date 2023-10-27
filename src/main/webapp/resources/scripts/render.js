@@ -1,170 +1,233 @@
-let canvas
-// window.addEventListener("DOMContentLoaded", () => {
-//     canvas = document.getElementById("canvas");
-//
-//     canvas.addEventListener("click",(e) =>{
-//         let finalX=0;
-//         let finalY=0;
-//         let elementRelativeX = e.offsetX;
-//         let elementRelativeY = e.offsetY;
-//         let canvasRelativeX = elementRelativeX * canvas.width/canvas.clientWidth;
-//         let canvasRelativeY = elementRelativeY *canvas.height/canvas.clientHeight;
-//         if(canvasRelativeY<=150){
-//             finalY=Math.round(defaultR-(canvasRelativeY-25)/25);
-//         }else{
-//             finalY=(-(Math.round((canvasRelativeY-150)/25)))
-//         }
-//         if(canvasRelativeX<=150){
-//             finalX=(-(Math.round(defaultR-(canvasRelativeX-40)/22)))
-//         }else{
-//             finalX=Math.round((canvasRelativeX-150)/22);
-//         }
-//         console.log(finalX,finalY)
-//         if(getDataFromFormAndClick(finalX,finalY)){
-//             console.log("Точка успешно поставлена!")
-//         }else{
-//             console.log("Точка не поставлена");
-//         }
-//
-//     })
-// })
+let defaultR = 2;
+let currentR;
 
-// function updateBeforeClick(elementRelativeX,elementRelativeY,r){
-//         let canvasRelativeX = elementRelativeX * canvas.width/canvas.clientWidth;
-//         let canvasRelativeY = elementRelativeY *canvas.height/canvas.clientHeight;
-//         if(canvasRelativeY<=150){
-//             finalY=Math.round(defaultR-(canvasRelativeY-25)/25);
-//         }else{
-//             finalY=(-(Math.round((canvasRelativeY-150)/25)))
-//         }
-//         if(canvasRelativeX<=150){
-//             finalX=(-(Math.round(defaultR-(canvasRelativeX-40)/22)))
-//         }else{
-//             finalX=Math.round((canvasRelativeX-150)/22);
-//         }
-//         console.log(finalX,finalY)
-//         if(updateNewPoint(finalX,finalY,r)){
-//             console.log("Точка успешно поставлена!")
-//         }else{
-//             console.log("Точка не поставлена");
-//         }
-// }
-//
-// function updateNewPoint(x,y,r){
-//     let size = 300;
-//
-//     let ctx = canvas.getContext("2d");
-//     drawPoint(ctx,size,x,y,)
-// }
+let canvasPlot;
+let ctx;
+let canvasPlotWidth;
+let canvasPlotHeight;
+let xAxis;
+let yAxis;
+//отступ между границами сетки
+const scaleX = 40;
+const scaleY = 40;
 
-let defaultR=5;
-let currentList;
+//коэффициент смещения текста от осей
+const shiftNames = 5;
+const shiftAxisNames = 20;
 
-function drawPolygon(ctx, size, r) {
-    console.log("In drawPolygon")
-    let totalPoints = 12;
-    let pointInPixels = size / totalPoints;
-    //draw rect
-    ctx.fillStyle = "steelblue";
-    ctx.beginPath();
-    ctx.fillRect(size / 2, size / 2, r * pointInPixels / 2, r * pointInPixels);
-    //draw triangle
-    ctx.beginPath();
-    ctx.moveTo((size / 2), size / 2);
-    ctx.lineTo(size / 2 - r * pointInPixels/2, size / 2);
-    ctx.lineTo(size / 2, size / 2 + r * pointInPixels/2);
-    ctx.fill();
-    //draw circle
-    ctx.beginPath();
-    ctx.moveTo(size / 2, size / 2);
-    ctx.arc(size / 2, size / 2, r * pointInPixels/2, 0,  3/2* Math.PI , Math.PI);
-    ctx.fill()
-}
+window.addEventListener("DOMContentLoaded", () => {
+    canvasPlot = document.getElementById("canvas");
+    ctx=canvasPlot.getContext("2d");
+    //ширина и высота канваса
+    //width = 400, height = 250
+     canvasPlotWidth = canvasPlot.clientWidth;
+     canvasPlotHeight = canvasPlot.clientHeight;
+    //значения рисования координатных осей
+//xAxis = 240, yAxis = 160
+     xAxis = Math.round(canvasPlotWidth / scaleX / 2) * scaleX;
+     yAxis = Math.round(canvasPlotHeight / scaleY / 2) * scaleY;
+    //форматирование текста
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    draw()
+    console.log("Start draw()")
 
-//Прорисовка осей координат
-function drawAxes(ctx, size) {
-    console.log("In drawAxes")
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, size / 2, size, 1);
-    ctx.fillRect(size / 2, 0, 1, size);
-}
+    //обработка нажатия на область канваса
+    canvasPlot.addEventListener("click", function (event) {
+            document.getElementById("validation-info").textContent = "";
+            // Получите координаты нажатия мыши относительно canvas
+            const x = event.clientX - canvasPlot.getBoundingClientRect().left;
+            const y = event.clientY - canvasPlot.getBoundingClientRect().top;
 
-//Подписи для осей
-function drawText(ctx, size, r) {
-    console.log("In drawText")
-    let totalPoints = 12;
-    let pointInPixels = size / totalPoints;
-    ctx.fillStyle = "black";
-    ctx.font = "15px serif";
-    //право
-    ctx.fillText("R", size / 2 + r * pointInPixels, size / 2);
-    ctx.fillText("R/2", size / 2 + r * pointInPixels / 2, size / 2);
-    //низ
-    ctx.fillText("R", size / 2, size / 2 + r * pointInPixels);
-    ctx.fillText("R/2", size / 2, size / 2 + r * pointInPixels / 2);
-    //верх
-    ctx.fillText("R", size / 2, size / 2 - (r * pointInPixels));
-    ctx.fillText("R/2", size / 2, size / 2 - (r * pointInPixels / 2));
-    //Лево
-    ctx.fillText("R/2", size / 2 - (r * pointInPixels / 2), size / 2);
-    ctx.fillText("R", size / 2 - r * pointInPixels, size / 2);
+            let tableX = (x - xAxis) / scaleX;
+            let tableY = (yAxis - y) / scaleY;
 
-}
+            if (tableX < -2 || tableX > 2) {
+                document.getElementById("validation-info").textContent = "Значение X не соответствует указанному диапозону!";
+            } else {
+                if (tableY < -3 || tableY > 3) {
+                    document.getElementById("validation-info").textContent = "Значение Y не соответствует указанному диапозону!";
+                } else {
+                    document.getElementById("validation-info").textContent = "";
 
-function drawPoint(ctx, size, xVal, yVal, flag){
-    console.log("In drawPoint",flag)
-    if (flag === 'Hit!') {
-        ctx.fillStyle = "green";
-    }else if(flag==="timePoint"){
-        ctx.fillStyle="Blue";
-    }
-    else {
-        ctx.fillStyle = "red";
-    }
-    let totalPoints = 12;
-    let pointInPixels = size / totalPoints
-    ctx.beginPath()
-    ctx.arc(size / 2 + pointInPixels * xVal, size / 2 - yVal * pointInPixels, 5, 0, Math.PI * 2)
-    ctx.fill();
-    return true;
-}
-function updateList(list){
-    canvas = document.getElementById("canvas");
-    currentList=list
-    drawWithList(currentList);
-}
-function drawWithList(list) {
-    currentList = list;
+                    // Рисуем точку в месте нажатия
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fillStyle = "#2b2d42"; // Цвет точки
+                    ctx.fill();
 
-    if (canvas.getContext) {
-         r=5;
-        const size = 300;
+                    console.log(tableX,tableY);
 
-        const ctx = canvas.getContext("2d");
-        canvas.setAttribute("width", size.toString());
-        canvas.setAttribute("height", size.toString());
-
-        if (r === undefined || r === 0 || r === null) {
-            r = defaultR;
-        }
-
-        drawPolygon(ctx, size, r);
-        drawAxes(ctx, size);
-        drawText(ctx, size, r);
-        if (list !== 0 && list !== null && list !== undefined) {
-            if (list.length >= 5) {
-                list = list.slice(-5, list.length);
+                    sendData(tableX, tableY, currentR);
+                }
             }
-            list.forEach((dot) => {
-                console.log(dot.x, dot.y)
-                drawPoint(ctx, size, dot.x, dot.y, dot.status)
-                // document.dispatchEvent(createMusicEvent());
-            });
+    });
 
-        }
-    }else {
-            alert("Canvas - unsupport");
-            //canvas-unsupported code
-        }
+});
+//вызывается при загрузке html-страницы и потом после передачи ей значений
+function draw(r, points) {
+    ctx.clearRect(0, 0, canvasPlotWidth, canvasPlotHeight);
+    drawGrid();
+    drawAxes();
+
+    currentR = defaultR;
+    if (currentR === undefined) {
+        drawText(defaultR);
+        // drawPolygon(defaultR);
+    } else {
+        drawText(currentR);
+        drawPolygon(currentR);
+    }
+    if(points !== undefined) {
+        points.forEach(function (point) {
+            let x = point.x;
+            let y = point.y;
+            let color = validatePointForCanvas(x, y, currentR);
+            drawPoint(r, x, y, color);
+        });
+    }
+
 }
+
+//рисование сетки - всегда статично
+function drawGrid() {
+    ctx.beginPath();
+    ctx.strokeStyle = "#ced0ce";
+    //Горизонтальные линии
+    for (let i = 0; i <= canvasPlotWidth; i = i + scaleX) {
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvasPlotHeight);
+
+        // ctx.fillText((i - xAxis) / scaleX, i + shiftNames, yAxis + shiftNames);
+    }
+    //Вертикальные линии
+    for (let i = 0; i <= canvasPlotHeight; i = i + scaleY) {
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvasPlotWidth, i);
+
+        // ctx.fillText((yAxis - i) / scaleY, xAxis + shiftNames, i + shiftNames);
+    }
+
+    ctx.stroke();
+    ctx.closePath();
+}
+
+//рисование главных осей - всегда статично
+function drawAxes() {
+    ctx.font = `${Math.round(scaleX / 2)}px Arial`;
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.strokeStyle = "#000000";
+
+    ctx.moveTo(xAxis, 0);
+    ctx.lineTo(xAxis, canvasPlotHeight);
+    ctx.fillText("y", xAxis - shiftAxisNames, 0);
+
+    ctx.moveTo(0, yAxis);
+    ctx.lineTo(canvasPlotWidth, yAxis);
+    ctx.fillText("x", canvasPlotWidth - shiftAxisNames, yAxis - shiftAxisNames);
+
+    ctx.stroke();
+    ctx.closePath();
+}
+
+//рисование подписей к главным осям - зависит от R
+function drawText(r) {
+    ctx.fillStyle = "#4f4f4f";
+    ctx.font = `${Math.round((r * 10) / 2)}px Arial`;
+
+    //ось x
+    ctx.fillText("-R", xAxis - scaleX * r + shiftNames, yAxis + shiftNames);
+    ctx.fillText(
+        "-R/2",
+        xAxis - (scaleX * r) / 2 + shiftNames,
+        yAxis + shiftNames
+    );
+    ctx.fillText(0, xAxis + shiftNames, yAxis + shiftNames);
+    ctx.fillText(
+        "R/2",
+        xAxis + (scaleX * r) / 2 + shiftNames,
+        yAxis + shiftNames
+    );
+    ctx.fillText("R", xAxis + scaleX * r + shiftNames, yAxis + shiftNames);
+
+    //ось y
+    ctx.fillText(
+        "R/2",
+        xAxis + shiftNames,
+        yAxis - (scaleY * r) / 2 + shiftNames
+    );
+    ctx.fillText(
+        "-R/2",
+        xAxis + shiftNames,
+        yAxis + (scaleY * r) / 2 + shiftNames
+    );
+}
+
+function drawPolygon(r) {
+    drawRect(r);
+    drawTriangle(r);
+    drawArc(r);
+}
+
+//рисование прямоугольника - зависит от R
+function drawRect(r) {
+    ctx.beginPath();
+    // ctx.rect(xAxis - scaleX * r, yAxis, scaleX * r, scaleX * (r / 2));
+    ctx.rect(xAxis, yAxis, scaleX * r/2,scaleY * r);
+    ctx.closePath();
+    ctx.strokeStyle = "#ffba08";
+    ctx.fillStyle = "rgba(163, 155, 168, 0.5)";
+    ctx.fill();
+    ctx.stroke();
+}
+
+//рисование круга - зависит от R
+function drawArc(r) {
+    ctx.beginPath();
+    ctx.moveTo(xAxis, yAxis);
+    ctx.arc(xAxis, yAxis, scaleX * (r / 2), -Math.PI / 2, 0, false);
+    ctx.closePath();
+    ctx.strokeStyle = "#ffba08";
+    ctx.fillStyle = "rgba(163, 155, 168, 0.5)";
+    ctx.fill();
+    ctx.stroke();
+}
+
+//рисование треугольника - зависит от R
+function drawTriangle(r) {
+    ctx.beginPath();
+    ctx.moveTo(xAxis, yAxis);
+    ctx.lineTo(xAxis, yAxis + scaleX * (r / 2));
+    ctx.lineTo(xAxis - scaleX * (r/2), yAxis);
+    ctx.closePath();
+    ctx.strokeStyle = "#ffba08";
+    ctx.fillStyle = "rgba(163, 155, 168, 0.5)";
+    ctx.fill();
+    ctx.stroke();
+}
+
+//рисование точки при наличии значений x, y
+function drawPoint(r, x, y, color) {
+    ctx.beginPath();
+    const scaledX = xAxis + x * scaleX;
+    const scaledY = yAxis - y * scaleY;
+    ctx.arc(scaledX, scaledY, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = color; // Цвет точки, например, синий
+    ctx.fill();
+    ctx.closePath();
+}
+
+function validatePointForCanvas(x, y, r) {
+    if ((y >= x / 2 - r / 2 && y <= 0 && x >= 0) || // Проверка попадания точки в первую область (треугольник)
+        (x * x + y * y <= (r / 2) * (r / 2) && x >= 0 && y >= 0) || // Проверка попадания точки во вторую область (окружность)
+        (x >= -r && x <= 0 && y >= -r / 2 && y <= 0)) { // Проверка попадания точки в третью область (прямоугольник)
+        return "green"; // Если точка попала в одну из областей, возвращаем true
+    } else {
+        return "red"; // Если точка не попала ни в одну из областей, возвращаем false
+    }
+}
+
+
+
 

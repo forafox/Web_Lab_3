@@ -1,0 +1,7 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "dependencies": {
+    "facesjs": "^3.8.2"
+  }
+}

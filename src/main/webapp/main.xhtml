@@ -4,8 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://java.sun.com/jsf/core ">
-<h:head>
+      xmlns:p="http://primefaces.org/ui"
+      xsi:schemaLocation="http://java.sun.com/jsf/core"
+>
+ <h:head>
     <meta charset="utf-8"/>
     <meta name="author" content="Karabanov Andrey"/>
     <meta name="description" content="third lab work for web-programming"/>
@@ -14,9 +16,10 @@
     <h:outputScript library="scripts" name="render.js"/>
     <h:outputScript library="scripts" name="clickManager.js"/>
     <h:outputStylesheet library="styles" name="style_main.css"/>
+     <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
 
 </h:head>
-<h:body>
+<h:body onload="updateList()">
     <nav>
         <div class="logo">Карабанов Андрей P3215. Вариант 7778</div>
         <div class="nav-items">
@@ -25,7 +28,7 @@
         </div>
     </nav>
     <div id="data-container">
-        <h:form if="form">
+        <h:form id="form">
         <div id="Y">
             Введите Y [-3; 5]:
             <br/>
@@ -51,7 +54,7 @@
                     <h:commandButton value="-1" action="#{dotBean.dot.setX(-1)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
-                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button active">
+                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button ">
                         <f:ajax/>
                     </h:commandButton>
                     <h:commandButton value="1" action="#{dotBean.dot.setX(1)}" styleClass="x-button">
@@ -77,27 +80,27 @@
                 <br/>
                 <div id="r-link-div">
                     <h:panelGroup>
-                        <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link" >
-                            <f:ajax/>
+                        <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link" onclick="rChange(1)" >
+                            <f:ajax render="r-change-script" />
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link" >
-                            <f:ajax/>
+                        <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link" onclick="rChange(1.5)" >
+                            <f:ajax  render="r-change-script" />
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link active" >
-                            <f:ajax/>
+                        <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link active" onclick="rChange(2)" >
+                            <f:ajax  render="r-change-script"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link" >
-                            <f:ajax/>
+                        <h:commandLink update="" value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link" onclick="rChange(2.5)" >
+                            <f:ajax />
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link" >
+                        <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link"  onclick="rChange(3)">
                             <f:ajax/>
                         </h:commandLink>
                     </h:panelGroup>
@@ -106,14 +109,13 @@
         </h:form>
         <div>
         </div>
-        <div class="canvas-form">
-            <canvas id="canvas"></canvas>
+        <div class="canvas-form" >
+            <canvas id="canvas" width="400px" height="240px"></canvas>
         </div>
     </div>
-
-
+    <div id="validation-info" class="validationInfo"></div>
     <div id="button-container">
-        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()}">
+        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()} , #{dotBean.dotsJson()}"  >
             <f:ajax render="results"/>
         </h:commandButton>
         <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить" action="#{dotBean.clear()}">
@@ -149,28 +151,49 @@
         </h:dataTable>
     </h:panelGroup>
 
-<!--    <h:outputScript type="text/javascript">-->
-<!--        let pointsJson = '#{DotBean.dotsJson()}'-->
-<!--        console.log(pointsJson)-->
-<!--    </h:outputScript>-->
 
     <h:outputScript type="text/javascript">
-        let pointsJson = `#{dotBean.dotsJson()}`
-        console.log(pointsJson)
-        let points = JSON.parse(pointsJson)
-        updateList(points)
+            function updateList() {
+                console.log("in update")
+                let pointsJson = `#{dotBean.dotsJson()}`
+                let points = JSON.parse(pointsJson)
+                let r = `#{dot.r}`
+                draw(r,points)
+<!--                checkButtonColor(#{dotBean.dot.x})-->
+            }
     </h:outputScript>
 
-<!--    <h:outputScript type="text/javascript">-->
-<!--        canvas = document.getElementById("canvas")-->
-<!--        canvas.addEventListener("click",(e) =>{-->
-<!--        let elementRelativeX = e.offsetX-->
-<!--        let elementRelativeY = e.offsetY-->
-<!--        let rValue=`#{dotBean.dot.r}`-->
-<!--        if(updateBeforeClick(elementRelativeX,elementRelativeY,rValue)){-->
-<!--            `#{dotBean.add()}`-->
-<!--        }-->
-<!--        })-->
-<!--    </h:outputScript>-->
+    <h:form id="myForm">
+        <h:inputHidden id="xValue" value="#{dotBean.dot.x}">
+        </h:inputHidden>
+        <h:inputHidden id="yValue" value="#{dotBean.dot.y}">
+        </h:inputHidden>
+        <h:inputHidden id="dots" value="#{dotBean.dotsJson()}">
+        </h:inputHidden>
+        <h:inputHidden id="rValue" value="#{dotBean.dot.r}">
+        </h:inputHidden>
+    </h:form>
+
+    <h:outputScript type="text/javascript">
+            function sendData(x,y,r) {
+                    console.log("in sendData")
+                    let xInput = document.getElementById('myForm:xValue');
+                    let yInput = document.getElementById('myForm:yValue');
+                    let button = document.getElementById('check');
+
+                    xInput.value = x;
+                    yInput.value = y;
+                    faces.ajax.request('myForm', null, {
+                    execute: 'myForm',
+                    render: 'results',
+                    onevent: function (data) {
+                        if (data.status === 'success') {
+                            button.click();
+                            updateList();
+                        }
+                    }
+                });
+            }
+    </h:outputScript>
 </h:body>
 </html>

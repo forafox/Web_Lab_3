@@ -194,6 +194,10 @@ link:hover{
 .active{
     background-color: red;
 }
+.validationInfo{
+    text-align: center;
+    color: red;
+}
 /*#C6DF90*/
 /*#F2DDC6*/
 /*#FFE4C4*/
