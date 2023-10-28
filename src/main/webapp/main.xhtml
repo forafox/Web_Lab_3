@@ -54,7 +54,7 @@
                     <h:commandButton value="-1" action="#{dotBean.dot.setX(-1)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
-                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button ">
+                    <h:commandButton value="0" action="#{dotBean.dot.setX(0)}" styleClass="x-button active">
                         <f:ajax/>
                     </h:commandButton>
                     <h:commandButton value="1" action="#{dotBean.dot.setX(1)}" styleClass="x-button">
@@ -81,27 +81,27 @@
                 <div id="r-link-div">
                     <h:panelGroup>
                         <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link" onclick="rChange(1)" >
-                            <f:ajax render="r-change-script" />
+                            <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
                         <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link" onclick="rChange(1.5)" >
-                            <f:ajax  render="r-change-script" />
+                            <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
                         <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link active" onclick="rChange(2)" >
-                            <f:ajax  render="r-change-script"/>
+                            <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
                         <h:commandLink update="" value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link" onclick="rChange(2.5)" >
-                            <f:ajax />
+                            <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
                         <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link"  onclick="rChange(3)">
-                            <f:ajax/>
+                            <f:ajax render="button-container myForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                 </div>
@@ -167,13 +167,29 @@
             let pointsJson= document.getElementById('myForm:dots').value;
             let rValue= document.getElementById('myForm:rValue').value;
             let points = JSON.parse(pointsJson)
-            console.log(rValue,points)
             draw(rValue,points)
         }
+<!--            function updateDotsListWithNewR(){-->
+<!--                console.log("in updateListWithNewR")-->
+<!--        faces.ajax.request('testForm', null, {-->
+<!--            execute: 'testForm',-->
+<!--            render: 'results',-->
+<!--            onevent: function (data) {-->
+<!--                if (data.status === 'success') {-->
+<!--                    setTimeout(function () {-->
+<!--                        let pointsJson= document.getElementById('testForm:dotsWithNewR').value;-->
+<!--                        let points = JSON.parse(pointsJson)-->
+<!--                         let rValue= document.getElementById('testForm:rValueWithNewR').value;-->
+<!--                        draw(rValue,points)-->
+<!--                    }, 200);-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--            }-->
     </h:outputScript>
 
     <h:outputScript type="text/javascript">
-            function sendData(x,y,r) {
+            function sendData(x,y) {
                     document.getElementById('myForm:xValue').value = x;
                     document.getElementById('myForm:yValue').value = y;
 

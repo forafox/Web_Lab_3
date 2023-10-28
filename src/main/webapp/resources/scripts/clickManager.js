@@ -22,12 +22,25 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function rChange(newValue){
     let rButtons = document.querySelectorAll('.r-link');
-    for (let i = 0; i < rButtons.length; i++) {
-        if (rButtons[i].value === newValue) {
-            rButtons[i].click()
-            break
+        switch (newValue) {
+            case 1 :
+                rButtons[0].click();
+                break
+            case 1.5 :
+                rButtons[1].click();
+                break
+            case 2 :
+                rButtons[2].click();
+                break
+            case 2.5 :
+                rButtons[3].click();
+                break
+            case 3 :
+                rButtons[4].click();
+                break
         }
-    }
+                draw(newValue,undefined);
+                // updateDotsListWithNewR();
 }
 
 function findButtonByValue(x){

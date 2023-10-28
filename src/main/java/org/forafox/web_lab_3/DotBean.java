@@ -19,16 +19,17 @@ import java.util.stream.Collectors;
 @Named("dotBean")
 @ApplicationScoped
 public class DotBean implements Serializable {
+
     private Dot dot;
     @Inject
     private DotDao dotDao;
     private List<Dot> dotsList;
     private int timezone;
+    private float currentR=2;
 
     @PostConstruct
     public void postConstruct() {
         try {
-            System.out.println("Dot created");
             dot = new Dot();
             dotDao.createEntityManager();
             dotsList = dotDao.getDotsFromDB();
@@ -38,7 +39,6 @@ public class DotBean implements Serializable {
     }
 
     public void add() {
-        System.out.println("Start try to add");
         long timer = System.nanoTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String currentTime = formatter.format(LocalDateTime.now().minusMinutes(getTimezone()));
@@ -54,11 +54,21 @@ public class DotBean implements Serializable {
         dot.setX(oldDot.getX());
         dot.setY(oldDot.getY());
         dot.setR(oldDot.getR());
+        currentR=oldDot.getR();
     }
 
     public void clear() {
         dotDao.clearDotsInBD();
         dotsList = dotDao.getDotsFromDB();
+    }
+
+    public int updateWithNewR(){
+        for(Dot dot : dotsList){
+            dot.setR(currentR);
+            dot.setStatus(AreaChecker.isHit(dot));
+        }
+        System.out.println(dotsList);
+        return 1;
     }
 
     public String dotsJson(){

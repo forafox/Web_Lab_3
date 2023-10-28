@@ -1,5 +1,6 @@
 let defaultR = 2;
 let currentR;
+let currentPoints;
 
 let canvasPlot;
 let ctx;
@@ -8,8 +9,8 @@ let canvasPlotHeight;
 let xAxis;
 let yAxis;
 //отступ между границами сетки
-const scaleX = 40;
-const scaleY = 40;
+const scaleX = 30;
+const scaleY = 30;
 
 //коэффициент смещения текста от осей
 const shiftNames = 5;
@@ -17,53 +18,51 @@ const shiftAxisNames = 20;
 
 window.addEventListener("DOMContentLoaded", () => {
     canvasPlot = document.getElementById("canvas");
-    ctx=canvasPlot.getContext("2d");
+    ctx = canvasPlot.getContext("2d");
     //ширина и высота канваса
     //width = 400, height = 250
-     canvasPlotWidth = canvasPlot.clientWidth;
-     canvasPlotHeight = canvasPlot.clientHeight;
+    canvasPlotWidth = canvasPlot.clientWidth;
+    canvasPlotHeight = canvasPlot.clientHeight;
     //значения рисования координатных осей
 //xAxis = 240, yAxis = 160
-     xAxis = Math.round(canvasPlotWidth / scaleX / 2) * scaleX;
-     yAxis = Math.round(canvasPlotHeight / scaleY / 2) * scaleY;
+    xAxis = Math.round(canvasPlotWidth / scaleX / 2) * scaleX;
+    yAxis = Math.round(canvasPlotHeight / scaleY / 2) * scaleY;
     //форматирование текста
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     draw()
-    console.log("Start draw()")
 
     //обработка нажатия на область канваса
     canvasPlot.addEventListener("click", function (event) {
-            document.getElementById("validation-info").textContent = "";
-            // Получите координаты нажатия мыши относительно canvas
-            const x = event.clientX - canvasPlot.getBoundingClientRect().left;
-            const y = event.clientY - canvasPlot.getBoundingClientRect().top;
+        document.getElementById("validation-info").textContent = "";
+        // Получите координаты нажатия мыши относительно canvas
+        const x = event.clientX - canvasPlot.getBoundingClientRect().left;
+        const y = event.clientY - canvasPlot.getBoundingClientRect().top;
 
-            let tableX = (x - xAxis) / scaleX;
-            let tableY = (yAxis - y) / scaleY;
+        let tableX = (x - xAxis) / scaleX;
+        let tableY = (yAxis - y) / scaleY;
 
-            if (tableX < -2 || tableX > 2) {
-                document.getElementById("validation-info").textContent = "Значение X не соответствует указанному диапозону!";
+        if (tableX < -3 || tableX > 5) {
+            document.getElementById("validation-info").textContent = "Значение X не соответствует указанному диапозону!";
+        } else {
+            if (tableY < -3 || tableY > 5) {
+                document.getElementById("validation-info").textContent = "Значение Y не соответствует указанному диапозону!";
             } else {
-                if (tableY < -3 || tableY > 3) {
-                    document.getElementById("validation-info").textContent = "Значение Y не соответствует указанному диапозону!";
-                } else {
-                    document.getElementById("validation-info").textContent = "";
+                document.getElementById("validation-info").textContent = "";
 
-                    // Рисуем точку в месте нажатия
-                    ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-                    ctx.fillStyle = "#2b2d42"; // Цвет точки
-                    ctx.fill();
+                // Рисуем точку в месте нажатия
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = "#2b2d42"; // Цвет точки
+                ctx.fill();
 
-                    console.log(tableX,tableY);
-
-                    sendData(tableX, tableY, currentR);
-                }
+                sendData(tableX, tableY);
             }
+        }
     });
 
 });
+
 //вызывается при загрузке html-страницы и потом после передачи ей значений
 function draw(r, points) {
     ctx.clearRect(0, 0, canvasPlotWidth, canvasPlotHeight);
@@ -72,22 +71,26 @@ function draw(r, points) {
 
     currentR = r;
     if (currentR === undefined) {
-        currentR=defaultR
+        currentR = defaultR
         drawText(defaultR);
         drawPolygon(defaultR);
     } else {
         drawText(currentR);
         drawPolygon(currentR);
     }
-    if(points !== undefined) {
+    if (points === undefined) {
+        points = currentPoints;
+    } else {
+        currentPoints = points;
+    }
+    if (points !== undefined) {
         points.forEach(function (point) {
             let x = point.x;
             let y = point.y;
-            let color = validatePointForCanvas(x, y, currentR);
+            let color = point.status === "Hit!" ? "green" : "red"
             drawPoint(r, x, y, color);
         });
     }
-
 }
 
 //рисование сетки - всегда статично
@@ -138,7 +141,6 @@ function drawText(r) {
     ctx.font = `${Math.round((r * 10) / 2)}px Arial`;
 
     //ось x
-    ctx.fillText("-R", xAxis - scaleX * r + shiftNames, yAxis + shiftNames);
     ctx.fillText(
         "-R/2",
         xAxis - (scaleX * r) / 2 + shiftNames,
@@ -150,7 +152,6 @@ function drawText(r) {
         xAxis + (scaleX * r) / 2 + shiftNames,
         yAxis + shiftNames
     );
-    ctx.fillText("R", xAxis + scaleX * r + shiftNames, yAxis + shiftNames);
 
     //ось y
     ctx.fillText(
@@ -162,6 +163,11 @@ function drawText(r) {
         "-R/2",
         xAxis + shiftNames,
         yAxis + (scaleY * r) / 2 + shiftNames
+    );
+    ctx.fillText(
+        "-R",
+        xAxis + shiftNames,
+        yAxis + (scaleY * r) + shiftNames
     );
 }
 
@@ -175,7 +181,7 @@ function drawPolygon(r) {
 function drawRect(r) {
     ctx.beginPath();
     // ctx.rect(xAxis - scaleX * r, yAxis, scaleX * r, scaleX * (r / 2));
-    ctx.rect(xAxis, yAxis, scaleX * r/2,scaleY * r);
+    ctx.rect(xAxis, yAxis, scaleX * r / 2, scaleY * r);
     ctx.closePath();
     ctx.strokeStyle = "#ffba08";
     ctx.fillStyle = "rgba(163, 155, 168, 0.5)";
@@ -200,7 +206,7 @@ function drawTriangle(r) {
     ctx.beginPath();
     ctx.moveTo(xAxis, yAxis);
     ctx.lineTo(xAxis, yAxis + scaleX * (r / 2));
-    ctx.lineTo(xAxis - scaleX * (r/2), yAxis);
+    ctx.lineTo(xAxis - scaleX * (r / 2), yAxis);
     ctx.closePath();
     ctx.strokeStyle = "#ffba08";
     ctx.fillStyle = "rgba(163, 155, 168, 0.5)";
@@ -217,16 +223,6 @@ function drawPoint(r, x, y, color) {
     ctx.fillStyle = color; // Цвет точки, например, синий
     ctx.fill();
     ctx.closePath();
-}
-
-function validatePointForCanvas(x, y, r) {
-    if ((y >= x / 2 - r / 2 && y <= 0 && x >= 0) || // Проверка попадания точки в первую область (треугольник)
-        (x * x + y * y <= (r / 2) * (r / 2) && x >= 0 && y >= 0) || // Проверка попадания точки во вторую область (окружность)
-        (x >= -r && x <= 0 && y >= -r / 2 && y <= 0)) { // Проверка попадания точки в третью область (прямоугольник)
-        return "green"; // Если точка попала в одну из областей, возвращаем true
-    } else {
-        return "red"; // Если точка не попала ни в одну из областей, возвращаем false
-    }
 }
 
 
