@@ -13,8 +13,8 @@
     <meta name="description" content="third lab work for web-programming"/>
 
     <title>Лабораторная работа №3</title>
-    <h:outputScript library="scripts" name="render.js"/>
-    <h:outputScript library="scripts" name="clickManager.js"/>
+    <h:outputScript library="scripts" name="render/render.js"/>
+    <h:outputScript library="scripts" name="managers/clickManager.js"/>
     <h:outputStylesheet library="styles" name="style_main.css"/>
      <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
 
@@ -156,7 +156,7 @@
         </h:inputHidden>
         <h:inputHidden id="yValue" value="#{dotBean.dot.y}">
         </h:inputHidden>
-        <h:inputHidden id="dots" value="#{dotBean.dotsJson()}">
+        <h:inputHidden id="dots" value="#{dotBean.getDotsJson()}">
         </h:inputHidden>
         <h:inputHidden id="rValue" value="#{dotBean.dot.r}">
         </h:inputHidden>
@@ -169,23 +169,6 @@
             let points = JSON.parse(pointsJson)
             draw(rValue,points)
         }
-<!--            function updateDotsListWithNewR(){-->
-<!--                console.log("in updateListWithNewR")-->
-<!--        faces.ajax.request('testForm', null, {-->
-<!--            execute: 'testForm',-->
-<!--            render: 'results',-->
-<!--            onevent: function (data) {-->
-<!--                if (data.status === 'success') {-->
-<!--                    setTimeout(function () {-->
-<!--                        let pointsJson= document.getElementById('testForm:dotsWithNewR').value;-->
-<!--                        let points = JSON.parse(pointsJson)-->
-<!--                         let rValue= document.getElementById('testForm:rValueWithNewR').value;-->
-<!--                        draw(rValue,points)-->
-<!--                    }, 200);-->
-<!--                }-->
-<!--            }-->
-<!--        });-->
-<!--            }-->
     </h:outputScript>
 
     <h:outputScript type="text/javascript">

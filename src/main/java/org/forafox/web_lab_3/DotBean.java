@@ -26,11 +26,13 @@ public class DotBean implements Serializable {
     private List<Dot> dotsList;
     private int timezone;
     private float currentR=2;
+    private Dot lastDot;
 
     @PostConstruct
     public void postConstruct() {
         try {
             dot = new Dot();
+            lastDot=dot;
             dotDao.createEntityManager();
             dotsList = dotDao.getDotsFromDB();
         } catch (Exception e) {
@@ -49,12 +51,20 @@ public class DotBean implements Serializable {
         dotsList.add(dot);
         dotDao.addDotToDB(dot);
 
-        Dot oldDot = dot;
+
+        //Код, который обновляет все данные для точек в таблице при новом значении r
+//        currentR=dot.getR();
+//        if(dot.getR()!=oldDot.getR()){
+//            updateWithNewR();
+//        }
+        //Код, который обновляет все данные для точек в таблице при новом значении r
+
+        lastDot = dot;
         dot = new Dot();
-        dot.setX(oldDot.getX());
-        dot.setY(oldDot.getY());
-        dot.setR(oldDot.getR());
-        currentR=oldDot.getR();
+        dot.setX(lastDot.getX());
+        dot.setY(lastDot.getY());
+        dot.setR(lastDot.getR());
+
     }
 
     public void clear() {
@@ -62,19 +72,18 @@ public class DotBean implements Serializable {
         dotsList = dotDao.getDotsFromDB();
     }
 
-    public int updateWithNewR(){
+    public void updateWithNewR(){
         for(Dot dot : dotsList){
             dot.setR(currentR);
             dot.setStatus(AreaChecker.isHit(dot));
         }
-        System.out.println(dotsList);
-        return 1;
     }
 
-    public String dotsJson(){
-        return   dotsList.stream()
+    public String getDotsJson(){
+        return dotsList.stream()
                 .map(Dot::toJSON)
                 .toList()
                 .toString();
     }
+
 }

@@ -16,7 +16,6 @@ import java.util.Locale;
 @Setter
 @Entity
 @Table(name = "dots")
-@ApplicationScoped
 public class Dot implements Serializable {
     @Id
     @GeneratedValue

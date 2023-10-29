@@ -198,6 +198,33 @@ link:hover{
     text-align: center;
     color: red;
 }
+
+#table-container {
+    max-height: 300px; /* Устанавливаем максимальную высоту таблицы в пикселях */
+    overflow-y: auto; /* Добавляем вертикальную полосу прокрутки при необходимости */
+}
+
+.table {
+    width: 100%; /* Устанавливаем ширину таблицы на 100% */
+}
+
+#table-container::-webkit-scrollbar {
+    width: 10px;
+}
+/* Фон полосы прокрутки */
+#table-container::-webkit-scrollbar-track {
+    background-color: var(--background-color);;
+}
+
+#table-container::-webkit-scrollbar {
+    background-color:  var(--background-color);
+}
+
+/* Цвет области, по которой можно прокрутить */
+#table-container::-webkit-scrollbar-thumb {
+    background-color: var(--dark-blue);
+    border-radius: 6px; /* закругление углов полосы прокрутки */
+}
 /*#C6DF90*/
 /*#F2DDC6*/
 /*#FFE4C4*/

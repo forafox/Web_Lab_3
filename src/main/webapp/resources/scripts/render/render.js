@@ -56,7 +56,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 ctx.fillStyle = "#2b2d42"; // Цвет точки
                 ctx.fill();
 
-                sendData(tableX, tableY);
+                sendData(tableX.toFixed(2), tableY.toFixed(2));
             }
         }
     });
@@ -101,15 +101,11 @@ function drawGrid() {
     for (let i = 0; i <= canvasPlotWidth; i = i + scaleX) {
         ctx.moveTo(i, 0);
         ctx.lineTo(i, canvasPlotHeight);
-
-        // ctx.fillText((i - xAxis) / scaleX, i + shiftNames, yAxis + shiftNames);
     }
     //Вертикальные линии
     for (let i = 0; i <= canvasPlotHeight; i = i + scaleY) {
         ctx.moveTo(0, i);
         ctx.lineTo(canvasPlotWidth, i);
-
-        // ctx.fillText((yAxis - i) / scaleY, xAxis + shiftNames, i + shiftNames);
     }
 
     ctx.stroke();

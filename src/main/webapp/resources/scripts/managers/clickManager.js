@@ -40,26 +40,5 @@ function rChange(newValue){
                 break
         }
                 draw(newValue,undefined);
-                // updateDotsListWithNewR();
 }
 
-function findButtonByValue(x){
-    let xButtons = document.querySelectorAll('.x-button');xButtons.forEach(function(button) {
-        for (let i = 0; i < xButtons.length; i++) {
-                if (button.value === x.toString()) {
-                    button.click()
-                    break
-                }
-        }
-    });
-}
-function checkButtonColor(x){
-    let xButtons = document.querySelectorAll('.x-button');xButtons.forEach(function(button) {
-        for (let i = 0; i < xButtons.length; i++) {
-            if (button.value === x.toString()) {
-                button.classList.add('active');
-                break
-            }
-        }
-    });
-}
