@@ -65,6 +65,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //вызывается при загрузке html-страницы и потом после передачи ей значений
 function draw(r, points) {
+    console.log("r in draw",r)
     ctx.clearRect(0, 0, canvasPlotWidth, canvasPlotHeight);
     drawGrid();
     drawAxes();
@@ -88,7 +89,10 @@ function draw(r, points) {
             let x = point.x;
             let y = point.y;
             let color = point.status === "Hit!" ? "green" : "red"
-            drawPoint(r, x, y, color);
+            console.log(point.r,currentR,point.r===currentR)
+            if(point.r === Number(currentR)) {
+                drawPoint(r, x, y, color);
+            }
         });
     }
 }

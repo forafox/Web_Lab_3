@@ -34,17 +34,14 @@ public class Dot implements Serializable {
     private long scriptTime;
 
     public void setX(float x) {
-        System.out.println(x);
         this.x = x;
     }
 
     public void setY(float y) {
-        System.out.println("Y value = " + y);
         this.y = y;
     }
 
     public void setR(float radius) {
-        System.out.println(radius);
         this.r = radius;
     }
 

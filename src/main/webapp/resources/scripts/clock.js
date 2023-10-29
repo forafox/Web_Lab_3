@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         clockFromDoc.innerHTML = [time[0], time[1], time[2]].join(':');
-        dayFromDoc.innerHTML = dayOfWeek[date.getDay()] + " " + date.getDay() + " " + months[date.getMonth()] + " " + date.getFullYear();
+        dayFromDoc.innerHTML = dayOfWeek[date.getDay()] + " " + date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
     }
     setTime()
     setInterval(setTime, 10000);

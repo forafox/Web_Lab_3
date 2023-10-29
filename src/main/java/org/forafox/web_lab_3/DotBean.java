@@ -27,6 +27,7 @@ public class DotBean implements Serializable {
     private int timezone;
     private float currentR=2;
     private Dot lastDot;
+    private String dotsJson;
 
     @PostConstruct
     public void postConstruct() {
@@ -50,14 +51,6 @@ public class DotBean implements Serializable {
         dot.setScriptTime((long) ((System.nanoTime() - timer) * 0.001));
         dotsList.add(dot);
         dotDao.addDotToDB(dot);
-
-
-        //Код, который обновляет все данные для точек в таблице при новом значении r
-//        currentR=dot.getR();
-//        if(dot.getR()!=oldDot.getR()){
-//            updateWithNewR();
-//        }
-        //Код, который обновляет все данные для точек в таблице при новом значении r
 
         lastDot = dot;
         dot = new Dot();
