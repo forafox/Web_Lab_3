@@ -10,9 +10,7 @@ import org.forafox.web_lab_3.utils.AreaChecker;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -25,7 +23,6 @@ public class DotBean implements Serializable {
     private DotDao dotDao;
     private List<Dot> dotsList;
     private int timezone;
-    private float currentR=2;
     private Dot lastDot;
     private String dotsJson;
 
@@ -33,7 +30,7 @@ public class DotBean implements Serializable {
     public void postConstruct() {
         try {
             dot = new Dot();
-            lastDot=dot;
+            lastDot = dot;
             dotDao.createEntityManager();
             dotsList = dotDao.getDotsFromDB();
         } catch (Exception e) {
@@ -65,14 +62,7 @@ public class DotBean implements Serializable {
         dotsList = dotDao.getDotsFromDB();
     }
 
-    public void updateWithNewR(){
-        for(Dot dot : dotsList){
-            dot.setR(currentR);
-            dot.setStatus(AreaChecker.isHit(dot));
-        }
-    }
-
-    public String getDotsJson(){
+    public String getDotsJson() {
         return dotsList.stream()
                 .map(Dot::toJSON)
                 .toList()

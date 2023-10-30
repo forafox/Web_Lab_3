@@ -16,11 +16,11 @@ public class AreaChecker {
     }
 
     private static boolean isCircleZone(double x, double y, double r) {
-        return (x * x + y * y <= r/2 * r/2) && (x >= 0) && (y >= 0);
+        return (x * x + y * y <= r / 2 * r / 2) && (x >= 0) && (y >= 0);
     }
 
     private static boolean isTriangleZone(double x, double y, double r) {
-//        1, 2, 3 - вершины треугольника, 0 - точка)
+//        (1, 2, 3 - вершины треугольника, 0 - точка)
         double x1 = -r / 2, x2 = 0, x3 = 0, y1 = 0, y2 = 0, y3 = -r / 2;
         double a1 = (x1 - x) * (y2 - y1) - (x2 - x1) * (y1 - y);
         double a2 = (x2 - x) * (y3 - y2) - (x3 - x2) * (y2 - y);

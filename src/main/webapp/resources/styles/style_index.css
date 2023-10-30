@@ -1,6 +1,7 @@
-:root{
+:root {
     --background-color: #FFDEAD;
 }
+
 * {
     background: var(--background-color);
     box-sizing: border-box;
@@ -26,6 +27,7 @@ nav {
     font-style: italic;
     padding: 0 2rem;
 }
+
 nav a {
     text-decoration: none;
     color: #000;
@@ -75,10 +77,10 @@ nav a:hover {
     background: #000;
     cursor: pointer;
     border-radius: 50px;
-    transition:  color 500ms,background 500ms;
+    transition: color 500ms, background 500ms;
 }
 
-link{
+link {
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
@@ -87,7 +89,8 @@ link{
     cursor: pointer;
     border-radius: 50px;
 }
-link:hover{
+
+link:hover {
     padding: 1rem 3rem;
     font-size: 1rem;
     border: none;
@@ -120,8 +123,7 @@ link:hover{
     }
 }
 
-.clockpage
-{
+.clockpage {
     margin: auto;
     max-width: 500px;
     min-width: 100px;
@@ -131,8 +133,8 @@ link:hover{
     font-weight: bold;
     margin-top: 25px;
 }
-#dayOfWeek
-{
+
+#dayOfWeek {
     display: block;
     font-weight: normal;
     font-size: 18px;

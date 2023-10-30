@@ -24,7 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
     canvasPlotWidth = canvasPlot.clientWidth;
     canvasPlotHeight = canvasPlot.clientHeight;
     //значения рисования координатных осей
-//xAxis = 240, yAxis = 160
+    //xAxis = 240, yAxis = 160
     xAxis = Math.round(canvasPlotWidth / scaleX / 2) * scaleX;
     yAxis = Math.round(canvasPlotHeight / scaleY / 2) * scaleY;
     //форматирование текста
@@ -65,7 +65,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //вызывается при загрузке html-страницы и потом после передачи ей значений
 function draw(r, points) {
-    console.log("r in draw",r)
     ctx.clearRect(0, 0, canvasPlotWidth, canvasPlotHeight);
     drawGrid();
     drawAxes();
@@ -86,12 +85,9 @@ function draw(r, points) {
     }
     if (points !== undefined) {
         points.forEach(function (point) {
-            let x = point.x;
-            let y = point.y;
             let color = point.status === "Hit!" ? "green" : "red"
-            console.log(point.r,currentR,point.r===currentR)
-            if(point.r === Number(currentR)) {
-                drawPoint(r, x, y, color);
+            if (point.r === Number(currentR)) {
+                drawPoint(r, point.x, point.y, color);
             }
         });
     }

@@ -4,19 +4,18 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:p="http://primefaces.org/ui"
       xsi:schemaLocation="http://java.sun.com/jsf/core"
 >
- <h:head>
+<h:head>
     <meta charset="utf-8"/>
     <meta name="author" content="Karabanov Andrey"/>
-    <meta name="description" content="third lab work for web-programming"/>
+    <meta name="description" content="Third lab work for web-programming"/>
 
     <title>Лабораторная работа №3</title>
     <h:outputScript library="scripts" name="render/render.js"/>
     <h:outputScript library="scripts" name="managers/clickManager.js"/>
     <h:outputStylesheet library="styles" name="style_main.css"/>
-     <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
+    <h:outputScript src="https://code.jquery.com/jquery-3.6.0.min.js"/>
 
 </h:head>
 <h:body onload="firstUpdateList()">
@@ -29,21 +28,20 @@
     </nav>
     <div id="data-container">
         <h:form id="form">
-        <div id="Y">
-            Введите Y [-3; 5]:
-            <br/>
-            <h:inputText id="Y-value" styleClass="y-value" value="#{dotBean.dot.y}" required="true"
-                         requiredMessage="Введите Y" validatorMessage="Не входит в [-3..5]"
-                         converterMessage="Введите число">
-                <f:validateDoubleRange minimum="-3" maximum="5"/>
-                <f:ajax render="Y-value-message"/>
-            </h:inputText>
-            <h:message id="Y-value-message" for="Y-value" styleClass="error"/>
-        </div>
+            <div id="Y">
+                Введите Y [-3; 5]:
+                <br/>
+                <h:inputText id="Y-value" styleClass="y-value" value="#{dotBean.dot.y}" required="true"
+                             requiredMessage="Введите Y" validatorMessage="Не входит в [-3..5]"
+                             converterMessage="Введите число">
+                    <f:validateDoubleRange minimum="-3" maximum="5"/>
+                    <f:ajax render="Y-value-message"/>
+                </h:inputText>
+                <h:message id="Y-value-message" for="Y-value" styleClass="error"/>
+            </div>
             <div id="X">
                 Выберите X [-3; 5]:
                 <br/>
-
                 <div id="x-button-div">
                     <h:commandButton value="-3" action="#{dotBean.dot.setX(-3)}" styleClass="x-button">
                         <f:ajax/>
@@ -69,38 +67,42 @@
                     <h:commandButton value="4" action="#{dotBean.dot.setX(4)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
-                    <h:commandButton value="5" action="#{dotBean.dot.setX(5)}" styleClass="x-button" >
+                    <h:commandButton value="5" action="#{dotBean.dot.setX(5)}" styleClass="x-button">
                         <f:ajax/>
                     </h:commandButton>
                 </div>
             </div>
-
             <div id="R">
                 Выберите R (1, 1.5, 2, 2.5, 3):
                 <br/>
                 <div id="r-link-div">
                     <h:panelGroup>
-                        <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link" onclick="rChange(1)" >
+                        <h:commandLink value="1" action="#{dotBean.dot.setR(1)}" styleClass="r-link"
+                                       onclick="rChange(1)">
                             <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link" onclick="rChange(1.5)" >
+                        <h:commandLink value="1.5" action="#{dotBean.dot.setR(1.5)}" styleClass="r-link"
+                                       onclick="rChange(1.5)">
                             <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link active" onclick="rChange(2)" >
+                        <h:commandLink value="2" action="#{dotBean.dot.setR(2)}" styleClass="r-link active"
+                                       onclick="rChange(2)">
                             <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink update="" value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link" onclick="rChange(2.5)" >
+                        <h:commandLink update="" value="2.5" action="#{dotBean.dot.setR(2.5)}" styleClass="r-link"
+                                       onclick="rChange(2.5)">
                             <f:ajax render="button-container myForm testForm"/>
                         </h:commandLink>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link"  onclick="rChange(3)">
+                        <h:commandLink value="3" action="#{dotBean.dot.setR(3)}" styleClass="r-link"
+                                       onclick="rChange(3)">
                             <f:ajax render="button-container myForm"/>
                         </h:commandLink>
                     </h:panelGroup>
@@ -109,16 +111,18 @@
         </h:form>
         <div>
         </div>
-        <div class="canvas-form" >
+        <div class="canvas-form">
             <canvas id="canvas" width="400px" height="240px"></canvas>
         </div>
     </div>
     <div id="validation-info" class="validationInfo"></div>
     <div id="button-container">
-        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить" action="#{dotBean.add()}">
+        <h:commandButton type="submit" id="check" styleClass="pointer button" value="Проверить"
+                         action="#{dotBean.add()}">
             <f:ajax render="results myForm"/>
         </h:commandButton>
-        <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить" action="#{dotBean.clear()}">
+        <h:commandButton type="button" id="clear" styleClass="pointer button" value="Очистить"
+                         action="#{dotBean.clear()}">
             <f:ajax render="results myForm"/>
         </h:commandButton>
     </div>
@@ -164,43 +168,41 @@
 
     <h:outputScript type="text/javascript">
         function firstUpdateList() {
-            let pointsJson= document.getElementById('myForm:dots').value;
-            let rValue= document.getElementById('myForm:rValue').value;
-            let points = JSON.parse(pointsJson)
-            draw(rValue,points)
+        let pointsJson= document.getElementById('myForm:dots').value;
+        let rValue= document.getElementById('myForm:rValue').value;
+        let points = JSON.parse(pointsJson)
+        draw(rValue,points)
         }
     </h:outputScript>
 
     <h:outputScript type="text/javascript">
-            function sendData(x,y) {
-                    document.getElementById('myForm:xValue').value = x;
-                    document.getElementById('myForm:yValue').value = y;
+        function sendData(x,y) {
+        document.getElementById('myForm:xValue').value = x;
+        document.getElementById('myForm:yValue').value = y;
 
-                    faces.ajax.request('myForm', null, {
-                    execute: 'myForm',
-                    render: 'results',
-                    onevent: function (data) {
-                        if (data.status === 'success') {
-                            document.getElementById('check').click();
-                        setTimeout(function() {
-                            firstUpdateList();
-                        }, 200);
+        faces.ajax.request('myForm', null, {
+        execute: 'myForm',
+        render: 'results',
+        onevent: function (data) {
+        if (data.status === 'success') {
+        document.getElementById('check').click();
+        setTimeout(function() {
+        firstUpdateList();
+        }, 200);
 
-                        }
-                    }
-                });
-            }
-            document.getElementById("clear").addEventListener("click",function () {
-                setTimeout(function() {
-                    console.log("clear")
-                    firstUpdateList();
-                }, 200);
+        }
+        }
+        });
+        }
+        document.getElementById("clear").addEventListener("click",function () {
+        setTimeout(function() {
+        firstUpdateList();
+        }, 200);
         });
         document.getElementById("check").addEventListener("click",function () {
-            setTimeout(function() {
-                console.log("check")
-                firstUpdateList();
-                }, 200);
+        setTimeout(function() {
+        firstUpdateList();
+        }, 200);
         });
     </h:outputScript>
 </h:body>
