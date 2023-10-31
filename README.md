@@ -4,7 +4,7 @@
 Left part             |  Right part
 :-------------------------:|:-------------------------:
 ![](https://github.com/forafox/Web_Lab_3/blob/master/images/index.png)  |  ![](https://github.com/forafox/Web_Lab_3/blob/master/images/main.png)
-![](https://github.com/forafox/Web_Lab_3/blob/master/images/test_values.png)   |  ![](https://github.com/forafox/Web_Lab_2/blob/master/images/error.png)
+![](https://github.com/forafox/Web_Lab_3/blob/master/images/test_values.png)   |  ![](https://github.com/forafox/Web_Lab_3/blob/master/images/error.png)
 
 
 ## Содержание проекта
