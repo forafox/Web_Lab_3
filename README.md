@@ -1,5 +1,12 @@
 # Лабораторная работа №3 по Веб-программированию
 
+
+Left part             |  Right part
+:-------------------------:|:-------------------------:
+![](https://github.com/forafox/Web_Lab_3/blob/master/images/index.png)  |  ![](https://github.com/forafox/Web_Lab_2/blob/master/images/main.png)
+![](https://github.com/forafox/Web_Lab_3/blob/master/images/test_values.png)   |  ![](https://github.com/forafox/Web_Lab_2/blob/master/images/error.png)
+
+
 ## Содержание проекта
 
 Разработано приложение на базе JavaServer Faces Framework, которое осуществляет проверку попадания точки в заданную
@@ -32,3 +39,20 @@
 - Для управления списком результатов используется Application-scoped Managed Bean.
 - Конфигурация управляемых бинов задана с помощью аннотаций.
 - Правила навигации между страницами приложения заданы в отдельном конфигурационном файле.
+
+### Help
+
+1. Проброс порта для просмотра 
+   ssh -L 3501:localhost:3501 helios
+2. Проброс порта для настройки wildFly
+   ssh -L 3503:localhost:3503 helios
+3. Просмотр конфигурации wildFly на Helios
+   cat /wildfly-29.0.1.Final/standalone/configuration/standalone.xml
+4. Добавление модуля
+   module add --name=org.postgresql --resources=postgresql-42.6.0.jar --dependencies=javax.api,javax.transaction.api
+5. Скачивание
+   wget https://jdbc.postgresql.org/download/postgresql-42.6.0.jar
+6. Запуск wildFly standalone
+   ./wildfly-29.0.1.Final/bin/standalone.sh
+7. Новый адрес
+   http://localhost:3501/lab3/

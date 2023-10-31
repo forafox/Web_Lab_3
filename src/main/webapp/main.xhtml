@@ -33,7 +33,7 @@
                 <br/>
                 <h:inputText id="Y-value" styleClass="y-value" value="#{dotBean.dot.y}" required="true"
                              requiredMessage="Введите Y" validatorMessage="Не входит в [-3..5]"
-                             converterMessage="Введите число">
+                             converterMessage="Введите число" maxlength="7">>
                     <f:validateDoubleRange minimum="-3" maximum="5"/>
                     <f:ajax render="Y-value-message"/>
                 </h:inputText>
@@ -188,7 +188,7 @@
         document.getElementById('check').click();
         setTimeout(function() {
         firstUpdateList();
-        }, 200);
+        }, 500);
 
         }
         }
@@ -202,7 +202,7 @@
         document.getElementById("check").addEventListener("click",function () {
         setTimeout(function() {
         firstUpdateList();
-        }, 200);
+        }, 500);
         });
     </h:outputScript>
 </h:body>
